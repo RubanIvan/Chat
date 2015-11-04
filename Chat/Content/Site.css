@@ -1,0 +1,138 @@
+﻿@font-face {
+  font-family: 'Harrington';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Harrington'), url(Img/Harrington.ttf) format('truetype');
+}
+html body {
+  background: url(Img/kapli-vodi-idrops.jpg) center no-repeat;
+  background-size: cover;
+}
+.messages {
+  margin: 0 20px;
+}
+header {
+  margin-top: 10px;
+  height: 90px;
+}
+header img {
+  height: 80%;
+  width: auto;
+  margin-left: 20px;
+  float: left;
+}
+#LogonForm h4 {
+  margin-top: 100px;
+}
+#LogonForm h2,
+#LogonForm h4 {
+  text-align: center;
+}
+#LogonForm .inptelemt {
+  margin-top: 50px;
+  margin-left: 290px;
+  margin-bottom: 100px;
+}
+#LogonForm .inptelemt input {
+  margin-bottom: 20px;
+}
+#LogonForm .inptelemt button {
+  margin-left: 50px;
+}
+#LogonForm .color-bg .fifty {
+  width: 50%;
+  float: left;
+  margin-top: 10px;
+}
+#LogonForm .color-bg .c1 {
+  background-position: -17px 0;
+}
+#LogonForm .color-bg .c2 {
+  background-position: -86px 0;
+}
+#LogonForm .color-bg .c3 {
+  background-position: -155px 0;
+}
+#LogonForm .color-bg .c4 {
+  background-position: -218px 0;
+}
+#LogonForm .color-bg .c5 {
+  background-position: -282px 0;
+}
+#LogonForm .color-bg .c6 {
+  background-position: -344px 0;
+}
+#LogonForm .color-bg .c7 {
+  background-position: -405px 0;
+}
+#LogonForm .color-bg .c8 {
+  background-position: -466px 0;
+}
+#LogonForm .color-bg .c9 {
+  background-position: -527px 0;
+}
+#LogonForm .color-bg .c10 {
+  background-position: -584px 0;
+}
+#LogonForm .color-bg input {
+  margin: 18px 0 0 12px;
+  cursor: pointer;
+}
+#LogonForm .color-bg label {
+  float: left;
+  width: 45px;
+  height: 50px;
+  background-image: url(Img/color-sprite.png);
+  background-repeat: no-repeat;
+  margin-top: 10px;
+  cursor: pointer;
+}
+#LogonForm .err_msg {
+  color: red;
+}
+.container {
+  width: 750px;
+}
+.container .color-bg {
+  background: url(Img/color-bg.png) no-repeat;
+  background-size: 100% 100%;
+  min-height: 130px;
+}
+#chat {
+  overflow: auto;
+  height: 500px;
+}
+#login {
+  overflow: auto;
+  height: 500px;
+}
+.window {
+  border: 1px solid #e3e3e3;
+  border-radius: 4px;
+}
+footer {
+  margin: 0 20px;
+  height: 40px;
+}
+footer hr {
+  background-color: #cacaca;
+  height: 1px;
+  margin: 10px;
+  margin-top: 30px;
+}
+footer span {
+  color: #449d44;
+  font-family: Harrington;
+  font-weight: bold;
+}
+footer li {
+  display: block;
+  float: left;
+  margin: 0 5px;
+}
+footer div:nth-child(2) {
+  float: left;
+}
+footer div:nth-child(3) {
+  float: right;
+}
