@@ -25,33 +25,42 @@ namespace Chat.Controllers
         {
             string login = Request["UserName"];
             string passwd = Request["UserPasswd"];
+            string color = Request["rad"] ?? "#000000";
+            if (login ==null || passwd==null ) return RedirectToAction("Login","Authorization",new {id=1});
 
-            if(login ==null || passwd==null ) return RedirectToAction("Login","Authorization",new {id=1});
-
-            SqlCommand command = new SqlCommand("Logon", DataBase.GetSqlConnection());
+            //дергаем хранимку
+            SqlConnection con = DataBase.GetSqlConnection();
+            SqlCommand command = new SqlCommand("Logon", con);
             command.CommandType = CommandType.StoredProcedure;
             command.Parameters.Add(new SqlParameter("@LoginName", SqlDbType.NChar));
             command.Parameters.Add(new SqlParameter("@Passwd", SqlDbType.NChar));
+            command.Parameters.Add(new SqlParameter("@Color", SqlDbType.NChar));
             command.Parameters[0].Value = login;
             command.Parameters[1].Value = passwd;
+            command.Parameters[2].Value = color;
+
             SqlDataReader DateReader = command.ExecuteReader();
             DateReader.Read();
-
-            if ((int)DateReader["Loged"] == 1)
+            
+            //если пользователь есть или он новый авторизуем
+            if ((int) DateReader["Loged"] == 1)
             {
-                // Создать объект cookie-набора
-                HttpCookie cookie = new HttpCookie("ChatAutorize");
+                DateReader.Close();
+                con.Close();
 
-                // Установить значения в нем
-                cookie["Authorize"] = 1.ToString();
-                cookie["LoginName"] = login;
+                Response.Cookies.Add(new HttpCookie("ChatAutorize", "1"));
+                Response.Cookies.Add(new HttpCookie("LoginName", login));
+                Response.Cookies.Add(new HttpCookie("Color", color));
 
-                // Добавить куки в ответ
-                Response.Cookies.Add(cookie);
+                
                 return RedirectToAction("Index", "Chat");
             }
-            else
-            { return RedirectToAction("Login","Authorization", new { id = 1 });}
+            else //пароль не совпал выдаем сообщение
+            {
+                DateReader.Close();
+                con.Close();
+                return RedirectToAction("Login","Authorization", new { id = 1 });
+            }
 
         }
 
