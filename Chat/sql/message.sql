@@ -34,7 +34,31 @@ INSERT Messages (UserId,[Time],Color,Mesage) VALUES (@UserId,CURRENT_TIMESTAMP,@
 GO
 
 ------------------------------------------------------------------------------------------
+DROP PROC GetMessage
+GO
 
+CREATE PROC GetMessage
+AS
+--SELECT TOP(20) MsgId,Time,Name,M.Color,Mesage FROM Messages M JOIN Users U ON M.UserId=U.UserID ORDER BY MsgId DESC
+SELECT * FROM [View] ORDER BY MsgId 
+GO
+-------------------------------------------------------------------------------------------
+--получить все сообщения больше чем MessageId
+DROP PROC GetLastMessage
+GO
+CREATE PROC GetLastMessage
+@MessageId int
+AS
+SELECT MsgId,Time,Name,M.Color,Mesage FROM Messages M JOIN Users U ON M.UserId=U.UserID 
+		 WHERE MsgId>@MessageId
+		 ORDER BY MsgId 
+GO
+---------------------------------------------------------------------------------------------
 SELECT * FROM Messages
 
-EXEC [InsertMsg] 'user1','#000000','Test Message'
+EXEC [InsertMsg] 'user1','#000000','Test Message5'
+
+
+SELECT (SELECT TOP(20) MsgId,Time,Name,M.Color,Mesage FROM Messages M JOIN Users U ON M.UserId=U.UserID ORDER BY MsgId DESC);
+
+SELECT * FROM [View] ORDER BY MsgId 

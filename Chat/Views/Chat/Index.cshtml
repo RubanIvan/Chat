@@ -185,9 +185,6 @@
 </div>
 
 
-
-
-
 @section scripts
 {
     <script type="text/javascript">
@@ -199,22 +196,47 @@
             var Color;
         }
 
-        var Users = new Array();
+        function Message() {
+            var MsgId;
+            var Time;
+            var Name;
+            var Color;
+            var Mesage;
+        }
 
-        window.setInterval(Update, 10000);
+        var Users = new Array();
+        var Messages = new Array();
+
+
+        function GetLastMsgId() {
+            //return 0;
+            if (Messages.length == 0 )return 0;
+            return Messages[Messages.length - 1].MsgId;
+        }
+
+        var datain;
+       // window.setInterval(Update, 10000);
 
         function Update() {
 
             $.ajax({
-                url: "@Url.Action("Update","Chat")",
+                url: "@Url.Action("Update", "Chat")",
                 type: "POST",
-                //data: JSON.stringify(dictionary),
-                contentType: "application/json; charset=utf-8",
+                data: {LastMsgId: GetLastMsgId()},
+                //contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                error: function (response) {
+                error: function(response) {
                     alert(response.responseText);
                 },
                 success: function (data) {
+                    datain = data;
+                    for (var i = 0; i < data.Messages.length; i++) {
+                        Messages.push(data.Messages[i]);
+                    }
+
+                    
+                    
+
                     console.log(data);
                 }
             });

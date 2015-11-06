@@ -28,7 +28,9 @@ namespace Chat.Controllers
             string login = Request.Cookies["LoginName"].Value;
             if (login == null) return null;
 
-            List<UserModel> Users=new List<UserModel>();
+            UpdateModel model =new UpdateModel();
+
+            //List<UserModel> Users=new List<UserModel>();
 
             //обновляем временную метку (пользователь не отключился от нас)
             SqlConnection con = DataBase.GetSqlConnection();
@@ -46,13 +48,40 @@ namespace Chat.Controllers
 
             while (DateReader.Read())
             {
-                Users.Add(new UserModel( (int)DateReader["UserID"], (string)DateReader["Name"], (DateTime)DateReader["LastUpdate"], (string)DateReader["Color"]));
+                model.Users.Add(new UserModel( (int)DateReader["UserID"], (string)DateReader["Name"], (DateTime)DateReader["LastUpdate"], (string)DateReader["Color"]));
                 //UserID,Name,LastUpdate,Color
             }
             DateReader.Close();
+            //----------------------------- закончили работу с user ------------------------------
+
+            int LastMsgId=0 ;
+            int.TryParse(Request["LastMsgId"],out LastMsgId);
+
+            if (LastMsgId==0)
+            {
+                command = new SqlCommand("GetMessage", con);
+                command.CommandType = CommandType.StoredProcedure;
+                DateReader = command.ExecuteReader();
+            }
+            else
+            {
+                command = new SqlCommand("GetLastMessage", con);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.Add(new SqlParameter("@MessageId", SqlDbType.NChar));
+                command.Parameters[0].Value = LastMsgId;
+                DateReader = command.ExecuteReader();
+            }
+
+            while (DateReader.Read())
+            {
+                model.Messages.Add(new MessageModel((int)DateReader["MsgId"], (DateTime)DateReader["Time"], (string)DateReader["Name"], (string)DateReader["Color"], (string)DateReader["Mesage"]));
+                //MsgId ,Time ,Name ,Color ,Mesage 
+            }
+            DateReader.Close();
+
             con.Close();
 
-            return Json(Users);
+            return Json(model);
 
         }
     }
