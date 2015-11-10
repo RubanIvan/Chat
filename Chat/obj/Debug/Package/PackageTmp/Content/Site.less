@@ -1,0 +1,213 @@
+﻿@win_height: 500px;
+
+@font-face {
+    font-family: 'Harrington';
+    font-style: normal;
+    font-weight: 400;
+    //src: local('Harrington'), url(https://fonts.gstatic.com/l/font?kit=QnKMyE7PnFoEQ3uk0TuAdr9Xo6PMNx4ZaWXQzkJftIk&skey=bd4df1d747baf9f0) format('truetype');
+    src: local('Harrington'), url(Img/Harrington.ttf) format('truetype');
+}
+
+html body {
+    background: url(Img/kapli-vodi-idrops.jpg) center no-repeat;
+    background-size: cover;
+}
+
+.messages {
+    margin: 0 20px;
+}
+
+header {
+    margin-top: 10px;
+    height: 90px;
+    //background: url(../logo.png) no-repeat;
+    img {
+        height: 80%;
+        width: auto;
+        margin-left: 20px;
+        float: left;
+    }
+}
+
+#LogonForm {
+
+    h4{
+        margin-top:100px;
+    }
+
+    h2, h4{
+        text-align:center;
+    }
+    .inptelemt {
+        margin-top:50px;
+        margin-left: 290px;
+        margin-bottom:100px;
+        input{
+            margin-bottom:20px;
+        }
+        button{
+            margin-left:50px;
+        }
+    }
+
+    .color-bg {
+
+        .fifty {
+            width: 50%;
+            float: left;
+            margin-top: 10px;
+        }
+
+        .c1 {
+            background-position: -17px 0;
+        }
+
+        .c2 {
+            background-position: -86px 0;
+        }
+
+        .c3 {
+            background-position: -155px 0;
+        }
+
+        .c4 {
+            background-position: -218px 0;
+        }
+
+        .c5 {
+            background-position: -282px 0;
+        }
+
+        .c6 {
+            background-position: -344px 0;
+        }
+
+        .c7 {
+            background-position: -405px 0;
+        }
+
+        .c8 {
+            background-position: -466px 0;
+        }
+
+        .c9 {
+            background-position: -527px 0;
+        }
+
+        .c10 {
+            background-position: -584px 0;
+        }
+
+        input {
+            margin: 18px 0 0 12px;
+            cursor: pointer;
+        }
+
+        label {
+            float: left;
+            width: 45px;
+            height: 50px;
+            background-image: url( Img/color-sprite.png);
+            background-repeat: no-repeat;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+    }
+
+    .err_msg{
+        color:red;
+    }
+}
+
+
+.container {
+    width: 750px;
+
+    .color-bg {
+        background: url(Img/color-bg.png) no-repeat;
+        background-size: 100% 100%;
+        min-height: 130px;
+    }
+}
+
+#chat {
+    overflow: auto;
+    height: @win_height;
+    span.UsrName {
+            padding-left:20px;
+            font-weight:bold;
+    }
+    span.Msg{
+            padding-left:20px;
+    }
+
+    
+}
+
+#login {
+    overflow: auto;
+    height: @win_height;
+    span{
+        //display:block;
+        padding-left:15px
+    }
+}
+
+
+#sendForm{
+
+    margin-top:20px;
+
+    #btnExit{
+        float:right;
+        width:100px;
+            
+    }
+
+    #inputText{
+        text-align:right;
+        width:100%;
+    }
+
+    #btnSend{
+        width:100px;
+    }
+}
+
+
+.window {
+    border: 1px solid #e3e3e3;
+    border-radius: 4px;
+}
+
+footer {
+    margin: 0 20px;
+    height: 40px;
+
+    hr {
+        background-color: #cacaca;
+        height: 1px;
+        margin: 10px;
+        margin-top:30px;
+    }
+
+    span {
+        color: #449d44;
+        font-family: Harrington;
+        font-weight: bold;
+    }
+
+    li {
+        display: block;
+        float: left;
+        margin: 0 5px;
+    }
+
+    div:nth-child(2) {
+        float: left;
+    }
+
+    div:nth-child(3) {
+        float: right;
+    }
+}

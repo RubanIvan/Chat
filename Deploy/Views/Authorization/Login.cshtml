@@ -1,0 +1,99 @@
+﻿
+@{
+    ViewBag.Title = "title";
+}
+
+
+
+<form id="LogonForm" action=@Url.Action("Logon") method="POST">
+
+    <h2>Добро пожаловать в чат</h2>
+
+    <div class="container">
+
+        <div class="color-bg">
+            <h4>Цвет сообщения:</h4>
+            <div class="color-text">
+                <div class="fifty">
+                    <label class="c1">
+                        <input type="radio" checked="checked" value="#000000" name="rad">
+                    </label>
+                    <label class="c2">
+                        <input type="radio" value="#990066" name="rad">
+                    </label>
+                    <label class="c3">
+                        <input type="radio" value="#ff0033" name="rad">
+                    </label>
+                    <label class="c4">
+                        <input type="radio" value="#0066cc" name="rad">
+                    </label>
+                    <label class="c5">
+                        <input type="radio" value="#00cccc" name="rad">
+                    </label>
+                </div>
+                <div class="fifty">
+                    <label class="c6">
+                        <input type="radio" value="#00cc33" name="rad">
+                    </label>
+                    <label class="c7">
+                        <input type="radio" value="#336600" name="rad">
+                    </label>
+                    <label class="c8">
+                        <input type="radio" value="#6A5ACD" name="rad">
+                    </label>
+                    <label class="c9">
+                        <input type="radio" value="#ff3300" name="rad">
+                    </label>
+                    <label class="c10">
+                        <input type="radio" value="#996633" name="rad">
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="inptelemt">
+            <div class="row">
+                <div>
+                    <input type="text" name="UserName" value="" placeholder="Назовите себя" />
+                </div>
+            </div>
+
+            
+
+            @if (ViewBag.id == 1)
+            {
+                <div class="row">
+                    <div>
+                        <p class="err_msg">Неверный пароль</p>
+                    </div>
+                </div>
+            }
+            <div class="row">
+                <input type="password" name="UserPasswd" value="" placeholder="Пароль" />
+            </div>
+            <div class="row">
+                <button id="send" class="btn btn-default">Войти</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section scripts
+{
+    <script type="text/javascript">
+
+        
+
+        $("#LogonForm").submit(function (e) {
+
+            if ($("#login").val().length > 0 && $("#passwd").val().length > 0) {
+                return true;
+            }
+            else {
+                return false;
+            }
+
+        });
+
+    </script>
+}

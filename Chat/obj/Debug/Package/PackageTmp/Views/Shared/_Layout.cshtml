@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title – приложение ASP.NET</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+
+    <header>
+        <a href=@Url.Action("Index","Chat")>
+            <img src="~/Content/Img/logo.png">
+        </a>
+    </header>
+
+
+    @RenderBody()
+
+
+    <footer>
+        <hr />
+        <div>
+            © 2015-2015 <span class="logo">ChatToMe</span>
+        </div>
+        <div>
+            <ul>
+                <li><a href=@Url.Action("Rules","Other")>Правила</a></li>
+                <li><a href=@Url.Action("Stat","Other")>Статистика</a></li>
+                <li><a href=@Url.Action("Login","Authorization")>Выход</a></li>
+                @*<li><a href="#">Форум тех. поддержки</a></li>
+                <li><a href="#">Выход</a></li>*@
+            </ul>
+        </div>
+    </footer>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

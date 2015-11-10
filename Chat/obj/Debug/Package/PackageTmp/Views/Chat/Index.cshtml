@@ -1,0 +1,193 @@
+﻿@{
+    ViewBag.Title = "ChatToMe";
+}
+
+
+
+<div class="container-fluid messages">
+    <div class="row">
+        <div class="col-xs-9 col-md-9 fix-height ">
+            <div id="chat" class="window">
+                @*<p>
+                    <span class="link time">08:02:54</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="link log">sherlock</span> <span style="color:#000000">эт планету двигать надо !</span>
+                </p>
+
+                <p>
+                    <span class="link time">08:02:54</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="link log">sherlock</span> <span style="color:#000000">эт планету двигать надо !</span>
+                </p>*@
+            </div>
+        </div>
+        <div class="col-xs-3 col-md-3 fix-height">
+            <div id="login" class="window">
+                <b>Пользователи @*(<span class="col">14</span>)*@</b><br>
+
+                @*<p id="l_Shades">
+                    <i class="info" id="99209">&nbsp;</i>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span class="link log" style="color:#000000">Shades</span>
+                </p>
+
+                <p id="l_aнгeлoк">
+                    <i class="info" id="107133">&nbsp;</i>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span class="link log" style="color:#990066">aнгeлoк</span>
+                </p>
+
+                <p id="l_пoшлятинкa_я">
+                    <i class="info" id="112907">&nbsp;</i>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span class="link log" style="color:#000000">пoшлятинкa_я</span>
+                </p>
+
+                <p id="l_BEЖЛИBЫЙ_ЧEЛOBEK">
+                    <i class="info" id="97838">&nbsp;</i>&nbsp;&nbsp;&nbsp;
+                    <span class="link log" style="color:#000000">BEЖЛИBЫЙ_ЧEЛOBEK</span>
+                </p>*@
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row" id="sendForm">
+        
+        <div class="col-xs-3 col-md-3">
+            @*<button class="btn btn-default" id="btnExit">Выход</button>*@
+        </div>
+
+        <div class="col-xs-6 col-md-6">
+            <input type="text" id="inputText"/>
+        </div>
+
+        <div class="col-xs-3 col-md-3" id="btnSend">
+            <button class="btn btn-default">Отправить</button>
+        </div>
+
+    </div>
+    </div>
+
+@section scripts
+{
+    <script type="text/javascript">
+
+        var Users = new Array();
+
+        var LastMessageId = 0;
+
+
+        var datain;
+
+        Update();
+
+        window.setInterval(Update, 5000);
+
+        $("#btnSend").click(function(e) {
+
+            $.ajax({
+                url: "@Url.Action("Send", "Chat")",
+                type: "POST",
+                data: { Message: $("#inputText").val() },
+                //contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                error: function(response) {
+                    alert(response.responseText);
+                },
+                success: function(data) {
+                    $("#inputText").val("");
+                    Update();
+                }
+
+
+            });
+        });
+
+
+        function Update() {
+
+            $.ajax({
+                url: "@Url.Action("Update", "Chat")",
+                type: "POST",
+                data: { LastMsgId: LastMessageId },
+                //contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                error: function(response) {
+                    alert(response.responseText);
+                },
+                success: function(data) {
+                    datain = data;
+
+                    Users = new Array();
+
+                    for (var i = 0; i < data.Users.length; i++) {
+                        Users.push(data.Users[i]);
+                    }
+
+                    //console.log(data);
+
+                    UpdateUser();
+
+                    UpdateMessage();
+                }
+            });
+
+        }
+
+        function UpdateUser() {
+
+            var u = $("#login p");
+
+            for (var i = 0; i < Users.length; i++) {
+
+                if (u[i] == null) {
+                    $("#login").append('<p id="' + Users[i].UserID + '">' +
+                        '<span style="color:' + Users[i].Color + '">' +
+                        Users[i].Name + '</span></p>');
+                } else {
+                    if ($(u[i]).attr("id") != Users[i].UserID) {
+                        $(u[i]).remove();
+                        $("#login p").eq(i).before('<p id="' + Users[i].UserID + '">' +
+                            '<span style="color:' + Users[i].Color + '">' +
+                            Users[i].Name + '</span></p>');
+
+                    }
+                }
+
+                $("#login p:gt(" + (Users.length - 1) + ")").remove();
+
+            }
+
+        }
+
+        function UpdateMessage() {
+
+            var m = $("#chat p");
+
+            //удаляем сообщения если их слишком много
+            if (m.length > 30) {
+                var d = m.length - 30;
+                $("#chat p:lt(" + d + ")").remove();
+            }
+
+            for (var i = 0; i < datain.Messages.length; i++) {
+                //Messages.push(data.Messages[i]);
+
+
+                $("#chat").append("<p><span class='time'>" + datain.Messages[i].Time + "</span>" +
+                    //+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
+                    "<span class='UsrName'>" + datain.Messages[i].Name + "</span>" +
+                    "<span class='Msg' style='color:" + datain.Messages[i].Color + "'>" +
+                    datain.Messages[i].Mesage + "</span>" +
+                    "</p>");
+
+                
+            }
+
+            if (datain.Messages.length > 0) {
+
+                LastMessageId = datain.Messages[datain.Messages.length - 1].MsgId;
+            }
+
+            document.getElementById("chat").scrollTop = 1000000;
+
+        }
+
+
+    </script>
+}
