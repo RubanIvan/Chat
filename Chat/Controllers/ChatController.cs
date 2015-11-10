@@ -15,7 +15,8 @@ namespace Chat.Controllers
         public ActionResult Index()
         {
             //Пользователь должен быть авторизован
-            if(Request.Cookies["ChatAutorize"]==null || Request.Cookies["ChatAutorize"].Value!="1") return RedirectToAction("Login", "Authorization");
+            if (Request.Cookies["ChatAutorize"] == null || Request.Cookies["ChatAutorize"].Value != "1")
+                return RedirectToAction("Login", "Authorization");
 
             return View();
         }
@@ -28,7 +29,7 @@ namespace Chat.Controllers
             string login = Request.Cookies["LoginName"].Value;
             if (login == null) return null;
 
-            UpdateModel model =new UpdateModel();
+            UpdateModel model = new UpdateModel();
 
             //List<UserModel> Users=new List<UserModel>();
 
@@ -43,21 +44,22 @@ namespace Chat.Controllers
             //получаем список подключенных пользователей (onLine)
             command = new SqlCommand("GetOnlineUsers", con);
             command.CommandType = CommandType.StoredProcedure;
-            
+
             SqlDataReader DateReader = command.ExecuteReader();
 
             while (DateReader.Read())
             {
-                model.Users.Add(new UserModel( (int)DateReader["UserID"], (string)DateReader["Name"], (DateTime)DateReader["LastUpdate"], (string)DateReader["Color"]));
+                model.Users.Add(new UserModel((int) DateReader["UserID"], (string) DateReader["Name"],
+                    (DateTime) DateReader["LastUpdate"], (string) DateReader["Color"]));
                 //UserID,Name,LastUpdate,Color
             }
             DateReader.Close();
             //----------------------------- закончили работу с user ------------------------------
 
-            int LastMsgId=0 ;
-            int.TryParse(Request["LastMsgId"],out LastMsgId);
+            int LastMsgId = 0;
+            int.TryParse(Request["LastMsgId"], out LastMsgId);
 
-            if (LastMsgId==0)
+            if (LastMsgId == 0)
             {
                 command = new SqlCommand("GetMessage", con);
                 command.CommandType = CommandType.StoredProcedure;
@@ -74,7 +76,9 @@ namespace Chat.Controllers
 
             while (DateReader.Read())
             {
-                model.Messages.Add(new MessageModel((int)DateReader["MsgId"], (DateTime)DateReader["Time"], (string)DateReader["Name"], (string)DateReader["Color"], (string)DateReader["Mesage"]));
+                model.Messages.Add(new MessageModel((int) DateReader["MsgId"],
+                    ((DateTime) DateReader["Time"]).ToString("T"), (string) DateReader["Name"],
+                    (string) DateReader["Color"], (string) DateReader["Mesage"]));
                 //MsgId ,Time ,Name ,Color ,Mesage 
             }
             DateReader.Close();
@@ -83,6 +87,33 @@ namespace Chat.Controllers
 
             return Json(model);
 
+        }
+
+
+        [HttpPost]
+        public JsonResult Send()
+        {
+            //Пользователь должен быть авторизован
+            if (Request.Cookies["ChatAutorize"] == null || Request.Cookies["ChatAutorize"].Value != "1") return null;
+            string login = Request.Cookies["LoginName"].Value;
+            if (login == null) return null;
+
+            string Message;
+            Message = Request["Message"];
+            if (Message.Length == 0) return null;
+
+            SqlConnection con = DataBase.GetSqlConnection();
+            SqlCommand command = new SqlCommand("InsertMsg", con);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add(new SqlParameter("@LoginName", SqlDbType.NChar));
+            command.Parameters.Add(new SqlParameter("@Color", SqlDbType.NChar));
+            command.Parameters.Add(new SqlParameter("@Msg", SqlDbType.NChar));
+            command.Parameters[0].Value = login;
+            command.Parameters[1].Value = Request.Cookies["Color"].Value;
+            command.Parameters[2].Value = Message;
+
+            command.ExecuteNonQuery();
+            return Json(1);
         }
     }
 }

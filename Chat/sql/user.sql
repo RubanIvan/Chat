@@ -52,7 +52,7 @@ GO
 CREATE PROC GetOnlineUsers
 AS
 SELECT UserID,Name,LastUpdate,Color FROM Users 
-	WHERE convert(timestamp ,CURRENT_TIMESTAMP-LastUpdate)/300<60
+	WHERE convert(timestamp ,CURRENT_TIMESTAMP-LastUpdate)/300<30
 GO
 -------------------------------------------------------------------------------------
 DROP PROC UpdateUserTime
@@ -77,15 +77,7 @@ EXEC GetOnlineUsers
 SELECT * FROM Users
 
 
---declare
---@startDate datetime,
---@endDate datetime;
---set @startDate = '2006-09-07 09:48:48';
---set @endDate = '2006-09-07 09:49:48';
---SELECT convert(timestamp ,@endDate - @startDate);
---select      CONVERT(int, (convert(timestamp ,@endDate - @startDate)));
---declare @startDate datetime ='2015-11-05 11:47:28';
---declare @endDate datetime ='2015-11-05 11:48:28';
---SELECT  CONVERT(int,convert(timestamp ,@endDate-@startDate))/300;
---SELECT UserID,Name,LastUpdate,Color FROM Users 
---	WHERE convert(timestamp ,CURRENT_TIMESTAMP-@startDate)<1800
+SELECT LastUpdate FROM Users WHERE Name='user1'
+	
+SELECT COUNT(M.UserId) FROM Messages M JOIN Users U ON M.UserId=U.UserID WHERE Name='user1'
+		GROUP  BY M.UserId

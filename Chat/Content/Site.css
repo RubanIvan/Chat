@@ -102,9 +102,33 @@ header img {
   overflow: auto;
   height: 500px;
 }
+#chat span.UsrName {
+  padding-left: 20px;
+  font-weight: bold;
+}
+#chat span.Msg {
+  padding-left: 20px;
+}
 #login {
   overflow: auto;
   height: 500px;
+}
+#login span {
+  padding-left: 15px;
+}
+#sendForm {
+  margin-top: 20px;
+}
+#sendForm #btnExit {
+  float: right;
+  width: 100px;
+}
+#sendForm #inputText {
+  text-align: right;
+  width: 100%;
+}
+#sendForm #btnSend {
+  width: 100px;
 }
 .window {
   border: 1px solid #e3e3e3;

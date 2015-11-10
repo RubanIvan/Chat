@@ -123,6 +123,7 @@
     <Compile Include="Controllers\AuthorizationController.cs" />
     <Compile Include="Controllers\ChatController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\OtherController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -185,6 +186,8 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Authorization\Login.cshtml" />
     <Content Include="Views\Chat\Index.cshtml" />
+    <None Include="Views\Other\Rules.cshtml" />
+    <None Include="Views\Other\Stat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

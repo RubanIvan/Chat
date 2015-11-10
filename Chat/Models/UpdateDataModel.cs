@@ -24,12 +24,12 @@ namespace Chat.Models
     public class MessageModel
     {
         public int MsgId;
-        public DateTime Time;
+        public string Time;
         public string Name;
         public string Color;
         public string Mesage;
 
-        public MessageModel(int msgId, DateTime time, string name, string color, string mesage)
+        public MessageModel(int msgId, string time, string name, string color, string mesage)
         {
             MsgId = msgId;
             Time = time;

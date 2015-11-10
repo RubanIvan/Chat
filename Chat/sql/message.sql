@@ -56,7 +56,7 @@ GO
 ---------------------------------------------------------------------------------------------
 SELECT * FROM Messages
 
-EXEC [InsertMsg] 'user1','#000000','Test Message5'
+EXEC [InsertMsg] 'user1','#0000cc','Test Message8'
 
 
 SELECT (SELECT TOP(20) MsgId,Time,Name,M.Color,Mesage FROM Messages M JOIN Users U ON M.UserId=U.UserID ORDER BY MsgId DESC);
